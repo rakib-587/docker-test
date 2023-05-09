@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  database:
+    container_name: test-database
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_DATABASE: test-db
+      MYSQL_USER: test
+      MYSQL_PASSWORD: test
+    ports:
+      - '3306:3306'
+  php:
+    container_name: test-php
+    build:
+      context: .
+    ports:
+      - '80:80'
+    volumes:
+      - .:/var/www/html
+    depends_on:
+      - database
